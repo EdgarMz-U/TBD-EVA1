@@ -1,0 +1,224 @@
+MySQL Shell 8.0.43
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 8
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > show databases
+                               -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| prueba             |
+| sakila             |
+| sys                |
+| tbd1               |
+| world              |
++--------------------+
+8 rows in set (0.0015 sec)
+ MySQL  localhost:3306 ssl  SQL > use tbd1;
+Default schema set to `tbd1`.
+Fetching global names, object names from `tbd1` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd1  SQL > show tables;
++----------------+
+| Tables_in_tbd1 |
++----------------+
+| cliente        |
+| cliente_datos  |
+| customer       |
+| docente        |
+| ficha          |
+| persona        |
+| playeras       |
+| student        |
++----------------+
+8 rows in set (0.0024 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > select * from customer;
++---------+-----------+---------+-------+
+| cust_id | cust_name | address | phone |
++---------+-----------+---------+-------+
+|       1 | TU        | NULL    | NULL  |
+|       4 | Juan      | NULL    | NULL  |
+|       5 | YO        | NULL    | NULL  |
++---------+-----------+---------+-------+
+3 rows in set (0.0215 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > create table Curso (
+                                     -> roll_no int not null,
+                                     -> name varchar(50) not null,
+                                     -> subjet varchar varchar(50) not null);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(50) not null)' at line 4
+ MySQL  localhost:3306 ssl  tbd1  SQL > create table Curso ( roll_no int not null, name varchar(50) not null, subjet varchar(50) not null);
+Query OK, 0 rows affected (0.0393 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > show tables;
++----------------+
+| Tables_in_tbd1 |
++----------------+
+| cliente        |
+| cliente_datos  |
+| curso          |
+| customer       |
+| docente        |
+| ficha          |
+| persona        |
+| playeras       |
+| student        |
++----------------+
+9 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > desc curso;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   |     | NULL    |       |
+| name    | varchar(50) | NO   |     | NULL    |       |
+| subjet  | varchar(50) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.0023 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > insert into curso (roll_no, nme, subjet) values
+                                     -> (100, "Faiz", "JAVA"),
+                                     -> (101, "Rama", "C++"),
+                                     -> (101, "Rama", "JAVA"),
+                                     -> (102, "Hiltesh", "ANDROID"),
+                                     -> (102, "Sultan", "C"),
+                                     -> (103, "Sultan", "C++"),
+                                     -> (106, "Mahendra", "PHP");.
+ERROR: 1054 (42S22): Unknown column 'nme' in 'field list'
+                                     -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.' at line 1
+ MySQL  localhost:3306 ssl  tbd1  SQL > insert into curso (roll_no, name, subjet) values
+                                     -> (100, "Faiz", "JAVA"),
+                                     -> (101, "Rama", "C++"),
+                                     -> (101, "Rama", "JAVA"),
+                                     -> (102, "Hiltesh", "ANDROID"),
+                                     -> (103, "Sultan", "C"),
+                                     -> (103, "Sultan", "C++"),
+                                     -> (106, "Mahendra", "PHP");
+Query OK, 7 rows affected (0.0080 sec)
+
+Records: 7  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd1  SQL > select * from curso;
++---------+----------+---------+
+| roll_no | name     | subjet  |
++---------+----------+---------+
+|     100 | Faiz     | JAVA    |
+|     101 | Rama     | C++     |
+|     101 | Rama     | JAVA    |
+|     102 | Hiltesh  | ANDROID |
+|     103 | Sultan   | C       |
+|     103 | Sultan   | C++     |
+|     106 | Mahendra | PHP     |
++---------+----------+---------+
+7 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > alter table curso add primary key (roll_no, subjet);
+Query OK, 0 rows affected (0.1030 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd1  SQL > desc curso;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| name    | varchar(50) | NO   |     | NULL    |       |
+| subjet  | varchar(50) | NO   | PRI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.0019 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > select * from curso;
++---------+----------+---------+
+| roll_no | name     | subjet  |
++---------+----------+---------+
+|     100 | Faiz     | JAVA    |
+|     101 | Rama     | C++     |
+|     101 | Rama     | JAVA    |
+|     102 | Hiltesh  | ANDROID |
+|     103 | Sultan   | C       |
+|     103 | Sultan   | C++     |
+|     106 | Mahendra | PHP     |
++---------+----------+---------+
+7 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > show tables;
++----------------+
+| Tables_in_tbd1 |
++----------------+
+| cliente        |
+| cliente_datos  |
+| curso          |
+| customer       |
+| docente        |
+| ficha          |
+| persona        |
+| playeras       |
+| student        |
++----------------+
+9 rows in set (0.0022 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > create table students (
+                                     -> idst int primary key,
+                                     -> last_name varchar (50) not null);
+Query OK, 0 rows affected (0.0335 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > create table prof (
+                                     -> idprof int not null primary key,
+                                     -> prof varchar(50) not null);
+Query OK, 0 rows affected (0.0359 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > create table grade (
+                                     -> idst int not null,
+                                     -> idprof int not null,
+                                     -> grade int not null);
+Query OK, 0 rows affected (0.0603 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > insert into students value
+                                     -> (1, "Mueller"),
+                                     -> (2, "Meier"),
+                                     -> (3, "Tobler");
+Query OK, 3 rows affected (0.0064 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd1  SQL > insert into prof value
+                                     -> (1, "Bernasconi"),
+                                     -> (2, "Borner"),
+                                     -> (3, "Schmid");
+Query OK, 3 rows affected (0.0069 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd1  SQL > insert into grade value
+                                     -> (1, 3, 5),
+                                     -> (2, 2, 4),
+                                     -> (3, 1, 6);
+Query OK, 3 rows affected (0.0072 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd1  SQL > desc grade;
++--------+------+------+-----+---------+-------+
+| Field  | Type | Null | Key | Default | Extra |
++--------+------+------+-----+---------+-------+
+| idst   | int  | NO   |     | NULL    |       |
+| idprof | int  | NO   |     | NULL    |       |
+| grade  | int  | NO   |     | NULL    |       |
++--------+------+------+-----+---------+-------+
+3 rows in set (0.0019 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > select * from grade;
++------+--------+-------+
+| idst | idprof | grade |
++------+--------+-------+
+|    1 |      3 |     5 |
+|    2 |      2 |     4 |
+|    3 |      1 |     6 |
++------+--------+-------+
+3 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL > desc students;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| idst      | int         | NO   | PRI | NULL    |       |
+| last_name | varchar(50) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.0019 sec)
+ MySQL  localhost:3306 ssl  tbd1  SQL >
